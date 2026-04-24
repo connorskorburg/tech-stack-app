@@ -6,8 +6,8 @@ export const dynamic = 'force-dynamic'
 async function checkSupabase() {
   try {
     const supabase = await createClient()
-    const { error } = await supabase.from('_supabase_test').select('*').limit(1)
-    return !error || error.code === '42P01'
+    const { data, error } = await supabase.auth.getSession()
+    return !error && data !== null
   } catch {
     return false
   }
